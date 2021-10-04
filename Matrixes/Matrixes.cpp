@@ -1,12 +1,13 @@
 ﻿#include<iostream>;
 using namespace std;
 
+template<typename T>
 class Matrix
 {
 public:
 	int height;
 	int width;
-	int** data;
+	T** data;
 	Matrix(int height, int width) : height(height), width(width)
 	{
 		int i, j;
@@ -23,7 +24,7 @@ public:
 
 	Matrix(int height, int width, int** data) : height(height), width(width), data(data) {}
 
-	Matrix(int size, int** data) : Matrix(size, size, data) {}
+	Matrix(int size, T** data) : Matrix(size, size, data) {}
 
 	Matrix() :Matrix(0, nullptr) {};
 	/*
@@ -46,7 +47,7 @@ public:
 	}
 };
 
-ostream& operator<<(ostream& out, Matrix& matrix)
+ostream& operator<<(ostream& out, Matrix<int>& matrix)
 {
 	int i, j;
 	for (i = 0; i < matrix.height; i++)
@@ -58,7 +59,7 @@ ostream& operator<<(ostream& out, Matrix& matrix)
 	return out;
 }
 
-Matrix operator>>(istream& in, Matrix& matrix)
+Matrix<int> operator>>(istream& in, Matrix<int>& matrix)
 {
 	int i, j;
 	cout << "Please, enter matrix's dimensions (height and width) and then the matrix itself";
@@ -69,16 +70,16 @@ Matrix operator>>(istream& in, Matrix& matrix)
 		for (j = 0; j < matrix.width; j++)
 			in >> matrix.data[i][j];
 	}
-	Matrix new_matrix(matrix.height, matrix.width, matrix.data);
+	Matrix<int> new_matrix(matrix.height, matrix.width, matrix.data);
 	return new_matrix;
 }
 
-Matrix operator+(Matrix first_matrix, Matrix second_matrix)
+Matrix<int> operator+(Matrix<int> first_matrix, Matrix<int> second_matrix)
 {
 	if ((first_matrix.height == second_matrix.height) && (first_matrix.width == second_matrix.width))
 	{
 		int i, j;
-		Matrix new_matrix(first_matrix.height, first_matrix.width);
+		Matrix<int> new_matrix(first_matrix.height, first_matrix.width);
 		for (i = 0; i < first_matrix.height; i++)
 			for (j = 0; j < first_matrix.width; j++)
 				new_matrix.data[i][j] = first_matrix.data[i][j] + second_matrix.data[i][j];
@@ -89,9 +90,9 @@ Matrix operator+(Matrix first_matrix, Matrix second_matrix)
 }
 
 
-Matrix operator*(int scalar, Matrix matrix)
+Matrix<int> operator*(int scalar, Matrix<int> matrix)
 {
-	Matrix new_matrix(matrix.height, matrix.width);
+	Matrix<int> new_matrix(matrix.height, matrix.width);
 	int i, j;
 	for (i = 0; i < new_matrix.height; i++)
 		for (j = 0; j < new_matrix.width; j++)
@@ -99,12 +100,12 @@ Matrix operator*(int scalar, Matrix matrix)
 	return new_matrix;
 }
 
-Matrix operator*(Matrix first_matrix, Matrix second_matrix)
+Matrix<int> operator*(Matrix<int> first_matrix, Matrix<int> second_matrix)
 {
 	if (first_matrix.width == second_matrix.height)
 	{
 		int i, j, k;
-		Matrix new_matrix(first_matrix.height, second_matrix.width);
+		Matrix<int> new_matrix(first_matrix.height, second_matrix.width);
 		for (i = 0; i < first_matrix.height; i++)
 			for (j = 0; j < first_matrix.width; j++)
 				for (k = 0; k < first_matrix.width; k++)
@@ -115,21 +116,21 @@ Matrix operator*(Matrix first_matrix, Matrix second_matrix)
 		cout << "The multiplication is impossible" << endl;
 }
 
-Matrix operator-(Matrix first_matrix, Matrix second_matrix)
+Matrix<int> operator-(Matrix<int> first_matrix, Matrix<int> second_matrix)
 {
 	if ((first_matrix.height == second_matrix.height) && (first_matrix.width == second_matrix.width))
 	{
-		Matrix new_matrix = first_matrix + (-1) * second_matrix;
+		Matrix<int> new_matrix = first_matrix + (-1) * second_matrix;
 		return new_matrix;
 	}
 	else
 		cout << "The subtaraction is impossible" << endl;
 }
 
-class Vector : public Matrix
+class Vector : public Matrix<int>
 {
 public:
-	Vector(int size) : Matrix(1, size) {};
+	Vector(int size) : Matrix<int>(1, size) {};
 	Vector(int size, int* array)
 	{
 		int** new_data = new int* [1];
@@ -166,18 +167,18 @@ int main()
 	data_B[1][0] = 9; data_B[1][1] = -3; data_B[1][2] = 7; data_B[1][3] = 8;
 	data_B[2][0] = 0; data_B[2][1] = 3; data_B[2][2] = 1; data_B[2][3] = 2;
 	data_B[3][0] = -7; data_B[3][1] = 6; data_B[3][2] = 0; data_B[3][3] = 10;
-	Matrix A(4, data_A);
-	Matrix B(4, data_B);
-	Matrix O(5, 6);
+	Matrix<int> A(4, data_A);
+	Matrix<int> B(4, data_B);
+	Matrix<int> O(5, 6);
 	cout << A;
 	cout << endl;
 	cout << B;
 	cout << endl;
-	Matrix C = A + B;
-	Matrix D = A * B;
-	Matrix F = 2 * C;
-	Matrix G = A - B;
-	Matrix H = G.transponation();
+	Matrix<int> C = A + B;
+	Matrix<int> D = A * B;
+	Matrix<int> F = 2 * C;
+	Matrix<int> G = A - B;
+	Matrix<int> H = G.transponation();
 	cout << C;
 	cout << endl;
 	cout << F;
