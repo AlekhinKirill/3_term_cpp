@@ -35,18 +35,16 @@ public:
 		return this->y_size;
 	}
 
-	Grid operator=(Grid grid)
+	Grid& operator=(Grid &grid)
 	{
-		cout << "Okey" << endl;
 		T swap_variable;
-		Grid new_grid{ grid.x_size, grid.y_size };
 		for (size_t i = 0; i < grid.y_size; i++)
 			for (size_t j = 0; j < grid.x_size; j++)
 			{
 				swap_variable = grid.memory[i][j];
-				new_grid.memory[i][j] = swap_variable;
+				this->memory[i][j] = swap_variable;
 			}
-		return new_grid;
+		return *this;
 	}
 
 	friend ostream& operator<<(ostream& out, Grid const& grid)
@@ -62,10 +60,21 @@ public:
 
 	friend istream& operator>>(istream& in, Grid& grid)
 	{
+		cout << "Enter matrix, please" << endl;
 		for (size_t i = 0; i < grid.y_size; i++)
 			for (size_t j = 0; j < grid.x_size; j++)
 				in >> grid.memory[i][j];
 		return in;
+	}
+
+	T operator()(size_t y_id, size_t x_id) const
+	{
+		return this->memory[y_id][x_id];
+	}
+
+	T& operator()(size_t y_id, size_t x_id)
+	{
+		return this->memory[y_id][x_id];
 	}
 };
 
@@ -76,6 +85,9 @@ int main()
 	cin >> A;
 	cout << "Result:" << endl;
 	cout << A;
-	Grid<int> B = A;
+	Grid<int> B{ 2, 2 };
+	B = A;
+	int element = B.operator()(1, 0);
+	cout << element << endl;
 	cout << B;
 }
