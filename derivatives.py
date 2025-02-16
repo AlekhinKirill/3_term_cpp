@@ -106,7 +106,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 0
+        return np.transpose(X).dot(np.sign(X.dot(w) - Y))/Y.size
 
     @staticmethod
     def l2_reg_derivative(w):
