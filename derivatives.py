@@ -87,7 +87,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return 2*(np.transpose(X).dot(X.dot(w) - Y))
+        return 2*(np.transpose(X).dot(X.dot(w) - Y))/Y.size
 
     @staticmethod
     def mae_derivative(X, Y, w):
@@ -106,7 +106,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return (np.transpose(X).dot(X.dot(w) - Y))/np.sqrt(((X.dot(w) - Y)**2).sum())
+        return 0
 
     @staticmethod
     def l2_reg_derivative(w):
@@ -133,7 +133,7 @@ class LossAndDerivatives:
         """
 
         # YOUR CODE HERE
-        return w/np.sqrt((w**2).sum())
+        return np.sign(w)
 
     @staticmethod
     def no_reg_derivative(w):
