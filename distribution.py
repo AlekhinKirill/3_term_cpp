@@ -34,7 +34,7 @@ class LaplaceDistribution:
         '''
         ####
         # Do not change the class outside of this block
-        return - np.abs(x - self.loc)/self.scale - np.log(2*self.scale)
+        return  (- np.abs(values - self.loc)/self.scale - np.log(2*self.scale)).sum()
         ####
         
     
